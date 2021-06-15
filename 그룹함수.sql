@@ -351,7 +351,278 @@ where emp_id = 1038;
 delete from emp300
 where emp_id = 1109;
 
-select * from emp300;
+select * from dept300;
+
+create table dept300
+as select emp_id , emp_name , salary*12 annsal , hiredate
+from y_emp
+where dept_id  =200;
+
+create table new1(
+a1 number(5) primary key,
+a2 varchar(10) 
+);
+
+insert into new1 (a1,a2) values(1000,'데이터');
+insert into new1 values(10000,'데이터2');
+
+desc new1;
+
+select * from new1;
+
+alter table new1
+add (a4 number(5) default 123);
+
+alter table new1
+modify (a1 number(10) default 123123);
+
+insert into new1 (a2,a3)values('데이터3', 0 );
+
+alter table new1
+rename column a1 to a0;
+
+alter table new1
+drop column a0;
+
+alter table new1 read write;
+
+drop table new1;
+
+flashback table new1 to before drop;
+
+select * from new1;
+
+rename new1 to new00;
+
+select * from new00;
+
+alter table new00
+add (a5 number(5));
+
+alter table new00
+add (a7 number(5)unique);
+
+desc new00;
+
+create table table1
+(col1 number(5) constraint table1_col1_pk primary key,
+col2 number(5)
+);
+//제약조건 추가.
+
+create table table2
+(col1 number(5) , col2 number(5));
+
+
+create table table3
+(col1 number(5) , col2 number(5),
+constraint table3_col1_pk primary key(col1),
+constraint table3_col2_uq unique(col2) );
+
+select constraint_name , constraint_type
+from user_constraints
+where table_name = 'TABLE1';
+
+alter table table1
+add constraint table_col2_uk unique(col2);
+
+alter table table1
+add (colm1 number(5),
+colm2 number(5));
+
+alter table table1
+add constraint table1_coll1_fk2 foreign key(colm2)
+references table3(col1)
+on delete cascade;
+
+insert into table3 (col1) values (1234);
+insert into table3 (col) values (1234);
+
+
+select * from table3;
+select * from table1;
+
+alter table table1
+add (col3 number(5));
+
+
+alter table table3
+add (col4 number(5));
+
+update table3
+set col4 = 123
+where col1 = 33;
+
+insert into TABLE1(col1,col3) values (33,33);
+insert into TABLE3(col1,col3) values (33,33);
+
+alter table table1
+add constraint table1_coll1_f43123 foreign key(col3),
+references table3(col1),
+on delete restrict;
+
+update table3
+set col1 = 0
+where col1 = 1234;
+
+select * from table3;
+
+delete from table3
+where col1= 33;
+
+select constraint_name , constraint_type
+from user_constraints;
+
+alter table table1 
+disable constraint table1_coll1_fk;
+
+alter table table1
+drop primary key (col1) constraint table1_coll1_fk;
+
+delete table3;
+
+create index idx
+on table3 (col3);
+
+drop index idx;
+
+select * from user_indexes;
+
+create or replace force view v2
+as (select col1 no1
+    from table1);
+  
+desc v2;
+
+select * from v2;
+
+insert into v2(no1) values(123);
+insert into v2(no1) values(345);
+
+insert into table1(col1) values(777);
+
+update table1
+set col1 = col1 +100;
+
+select * from table1;
+
+alter table table1
+add col4 number(4);
+
+insert into table1(col1 , col4) values(33,444);
+
+alter table table1
+add col6 number(4);
+
+create or replace view v3
+as  select* from table1;
+
+desc v3;
+
+insert into v3(col1, col6) values(1,111);
+
+select * from v3;
+select * from table1;
+
+insert into table1(col1, col6) values(2,111);
+
+commit;
+
+select emp_id, emp_name , level ,lpad(level ,level,  '*') 
+from y_emp
+start with emp_id = 1001
+connect by prior emp_id = mgr_id;
+
+select *
+from  user_constraints;
+
+select constraint_name
+from user_constraints
+where table_name ='Y_EMP';
+
+select * from all_tables;
+select * from user_tables;
+
+create table newtable2
+(col1 number(5,5) primary key,
+col2 varchar(7));
+
+select* from newtable1;
+
+alter table newtable1
+add(col3 varchar(10) default 'name' not null);
+
+insert into newtable1(col1,col2,col3) values (0,0,0);
+
+desc newtable2;
+
+select* from newtable2;
+
+insert into newtable2 (col1) values(0.123);
+
+update newtable2
+set col2 = '이름'
+where col1 = 0.123;
+
+alter table newtable2
+add constraint newtable2_col1_ck unique(col2);
+
+create table n1
+(col number(3) constraint n1_col_pk primary key);
+
+create table n2
+(col number(3),
+constraint n2_col primary key(col));
+
+select constraint_name , constraint_type
+from user_constraints
+where table_name = 'N2';
+
+ALTER TABLE n2
+add (col2 number(5));
+
+alter table n2
+add constraint n2_unique unique(col2) ;
+
+select *
+from n2;
+
+insert into n2(col,col2) values(1,100);
+
+update n2
+set col2 = 101
+where col = 1;
+
+alter table n2
+add (col3 number(5));
+
+update n2
+set col3 = nvl2(col3,777 , 444)
+where col = 1;
+
+select rownum as rank , emp_id , emp_name , salary
+from (select emp_id , emp_name , salary from y_emp
+where salary is not null
+order by salary desc)
+where rownum<= 5;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
