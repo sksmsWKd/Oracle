@@ -606,6 +606,34 @@ where salary is not null
 order by salary desc)
 where rownum<= 5;
 
+select emp_name , nullif(123,comm)
+from y_emp;
+
+create table new4
+(col1 number(5) );
+
+desc new4;
+
+
+create table new5
+(col1 number(5) ,
+constraint new4_col1_pk primary key(col1));
+
+
+create table new6
+(col1 number(5) constraint new4_col1_pk1 primary key
+);
+
+select emp_name , position,decode(position,'대리','대리입니다.'),case position when '대리' then '대리충' else '현지인' end
+from y_emp;
+
+alter table new5
+add (col2 number());
+
+
+
+
+
 
 
 
